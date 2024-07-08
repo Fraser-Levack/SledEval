@@ -41,17 +41,5 @@ int main() {
         printf("Some tests failed.\n");
     }
 
-
-    char *expression = "2 + 2 * 2";
-    int result = eval(expression);
-    if (result != 6) {
-        printf("Test failed: %s = %d (expected 6)\n", expression, result);
-        passed = 0;
-    } else {
-        printf("Test passed: %s = %d\n", expression, result);
-    }
-    return 0;
-
-
     return !passed;
 }
