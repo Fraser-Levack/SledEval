@@ -7,6 +7,19 @@ void skipwhite(const char **p)
 {
     while(isspace(**p)) (*p)++;
 }
+
+int power(int const base, int const exp)
+{
+    if (exp == 0)
+        return 1;
+    int result = 1;
+    for(int i = 0; i < exp; i++)
+    {
+        result *= base;
+    }
+    return result;
+}
+
 int evalexpr(const char **);
 
 int gettok(const char **p, int *vp)
@@ -49,15 +62,29 @@ int evalpri(const char **p)
     }
 }
 
+int evalindc(const char **p)
+{
+    int r = evalpri(p);
+    while(1)
+    {
+        const int op = gettok(p, NULL);
+        switch(op)
+        {
+            case '^': r = power(r, evalpri(p)); break;
+            default: ungettok(op, p); return r;
+        }
+    }
+}
+
 
 int evalterm(const char **p)
 {
-    int r = evalpri(p);
+    int r = evalindc(p);
     while(1) {
         const int op = gettok(p, NULL);
         switch(op) {
-            case '*': r *= evalpri(p); break;
-            case '/': r /= evalpri(p); break;
+            case '*': r *= evalindc(p); break;
+            case '/': r /= evalindc(p); break;
             default: ungettok(op, p); return r;
         }
 
