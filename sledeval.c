@@ -38,7 +38,7 @@ int gettok(const char **p, int *vp)
     return c;
 }
 
-void ungettok(int, const char **p)
+void ungettok(int token, const char **p)
 {
     (*p)--;
 }
